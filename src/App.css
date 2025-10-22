@@ -1,19 +1,34 @@
-/* PIE CHART STYLE */
-.pie-chart-container {
-  width: 400px; /* Adjust the width as needed */
-  height: 400px; /* Adjust the height as needed */
-  margin: 20px auto; /* Centers the chart and adds some margin */
+.chart-container {
+  display: flex; /* Use flexbox for layout */
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  justify-content: space-around; /* Space items evenly across the line */
+  margin-bottom: 20px; /* Add space between chart groups */
 }
-
-.chart-title,
 .chart-subtitle {
   text-align: center;
 }
+.chart-pair {
+  display: flex;
+  width: 78%; /* Each pair takes up half the width (with some space) */
+  margin-bottom: 20px;
+  border: 1px solid #adadad; /* Add a border around the pair */
+  border-radius: 5px; /* Add a rounded border */
+  overflow: hidden; /* Prevent the border from overflowing */
+  background-color: #f2f2f2;
+}
 
-/* BAR CHART STYLE */
+.chart-pair > * {
+  width: 50%; /* Each chart in the pair takes up half the pair's width */
+  padding: 10px; /* Add padding for spacing */
+  box-sizing: border-box; /* Include padding in the width */
+  border-right: 1px solid #adadad; /* Add vertical separator */
+}
 
-.bar-chart-container {
-  width: 800px; /* Adjust the width as needed */
-  height: 800px; /* Adjust the height as needed */
-  margin: 20px auto; /* Centers the chart and adds some margin */
+.chart-pair > *:last-child {
+  border-right: none; /* Remove vertical separator for the last chart */
+}
+
+.chart-title {
+  text-align: center;
+  margin-bottom: 10px;
 }

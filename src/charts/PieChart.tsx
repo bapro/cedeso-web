@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 
-// Register the components
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+// Changed to the correct data
 interface ProfileData {
-  profileType: string;
+  profileType: string | null; // Now it must be string | null to match what is coming from the backend
 }
 
 interface IncidentData {
   id: number;
-  profile: ProfileData | null;
+  profileType: string | null; // ADDED THIS
 }
 
 interface PieChartProps {
@@ -46,18 +46,23 @@ const PieChart: React.FC<PieChartProps> = ({ apiEndpoint }) => {
       try {
         const response = await fetch(apiEndpoint); // Use the prop
         const data: IncidentData[] = await response.json();
-
+        // console.log("Raw Data from API:", data); // Log raw data
         // Process the data to create chart data
         const profileCounts: { [key: string]: number } = {};
         data.forEach((incident) => {
-          if (incident.profile) {
-            profileCounts[incident.profile.profileType] =
-              (profileCounts[incident.profile.profileType] || 0) + 1;
+          // console.log("Processing Incident:", incident); // Log each incident
+          if (incident.profileType) {
+            // Use profileType directly
+            // console.log("profileType:", incident.profileType); // Log profileType
+            profileCounts[incident.profileType] =
+              (profileCounts[incident.profileType] || 0) + 1;
           }
         });
 
         const labels = Object.keys(profileCounts);
+        // console.log("Labels:", labels); // Log labels
         const dataValues = Object.values(profileCounts);
+        // console.log("Data Values:", dataValues); // Log data values
         const backgroundColors = labels.map((_, index) => {
           const colors = [
             "rgba(54, 162, 235, 0.7)",
@@ -103,21 +108,38 @@ const PieChart: React.FC<PieChartProps> = ({ apiEndpoint }) => {
     responsive: true,
     plugins: {
       legend: {
-        position: "top" as const,
+        position: "bottom" as const, // Change position to "bottom"
+        display: true,
+        labels: {
+          padding: 20,
+          usePointStyle: true, // Makes legend icons round/smaller if desired
+        },
       },
       title: {
         display: false,
         text: "Total de personas por perfil - 238 personas",
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context: any) {
+            let label = context.label || "";
+            if (label) {
+              label += ": ";
+            }
+            const value = context.raw || 0;
+            const total = context.chart._metasets[context.datasetIndex].total;
+            const percentage = Math.round((value / total) * 100);
+            return label + value + " (" + percentage + "%)";
+          },
+        },
       },
     },
   };
 
   return (
     <div className="pie-chart-container">
-      <h1 className="chart-title">Mi gráfico circular</h1>
-      <h3 className="chart-subtitle">
-        Total de personas por perfil ({totalPersons} personas){" "}
-      </h3>
+      <h1 className="chart-title">Total de personas por perfil </h1>
+      <h3 className="chart-subtitle">Total de ({totalPersons} personas) </h3>
       <Pie data={chartData} options={options} />
     </div>
   );
