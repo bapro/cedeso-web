@@ -16,8 +16,8 @@ import HasDisabilityPieChart from "./charts/HasDisabilityPieChart";
 import IsLGBTQPieChart from "./charts/IsLGBTQPieChart";
 import TakenToPieChart from "./charts/TakenToPieChart";
 function App() {
-  const apiEndpoint = "http://localhost:5000/api/forms"; // Define the API endpoint
-  //const apiEndpoint = "https://cedeso-backend.onrender.com/api/forms";
+  //const apiEndpoint = "http://localhost:5000/api/forms"; // Define the API endpoint
+  const apiEndpoint = "https://cedeso-backend.onrender.com/api/forms";
   // return (
   //   <div className="App">
   //     <br /> {/* Add space before the image */}
