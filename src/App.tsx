@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import EventLocationPieChart from "./charts/EventLocationPieChart";
 import PieChart from "./charts/PieChart";
 import ReporterTypeChart from "./charts/ReporterTypeChart"; // Import the new component
 import ProvinceBarChart from "./charts/ProvinceBarChart"; // Import the new component
@@ -16,7 +17,7 @@ import HasDisabilityPieChart from "./charts/HasDisabilityPieChart";
 import IsLGBTQPieChart from "./charts/IsLGBTQPieChart";
 import TakenToPieChart from "./charts/TakenToPieChart";
 function App() {
-  //const apiEndpoint = "http://localhost:5000/api/forms"; // Define the API endpoint
+  //const apiEndpoint = "https://cedeso-backend.onrender.com/api/forms"; // Define the API endpoint
   const apiEndpoint = "https://cedeso-backend.onrender.com/api/forms";
   // return (
   //   <div className="App">
@@ -175,6 +176,7 @@ function App() {
           {" "}
           {/* Group 8 */}
           <TakenToPieChart apiEndpoint={apiEndpoint} />
+          <EventLocationPieChart apiEndpoint={apiEndpoint} />
         </div>
       </div>
     </div>
